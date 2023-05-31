@@ -6,14 +6,12 @@
 
 	let mounted = false;
 
-	// Get the data from the store
-	// When the store gets updated form the onclick function in Nest,
-	// let it render through
-	// let m = new Map();
-
 	// String : Circuit (Bool | Any | All)
 	let m = new Map();
 
+	// Get the data from the store
+	// When the store gets updated form the onclick function in Nest,
+	// let it render through
 	store_data.subscribe(d => {
 		m = d;
 
@@ -101,5 +99,4 @@
 	.entry {
 		display: flex;
 	}
-
 </style>
