@@ -1,18 +1,6 @@
-# create-svelte
+# ccweb
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+User facing interface for the natural4 outputs.
 
 ## Developing
 
@@ -35,4 +23,11 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Deployment
+
+```bash
+docker build -t ccweb .
+docker run -p 5000:5000 ccweb
+```
+
+Docker will use `nginx` to serve the static files. Expose `5000` locally to view the page.
