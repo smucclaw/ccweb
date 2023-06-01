@@ -8,7 +8,6 @@
 
 	// String : Circuit (Bool | Any | All)
 	let m = new Map();
-
 	// Get the data from the store
 	// When the store gets updated form the onclick function in Nest,
 	// let it render through
@@ -35,40 +34,27 @@
 		}
 	}
 
-	// @ts-ignore
-	function parse(obj) {
-		if (obj.tag == "All") {
-			let t = []
-			for (let i = 0; i < obj.contents[1].length; i++)
-				t.push(parse(obj.contents[1][i]))
-			return new AllQuantifier(t, "all_quantifier")
-		} else if (obj.tag == "Any") {
-			let t = []
-			for (let i = 0; i < obj.contents[1].length; i++)
-				t.push(parse(obj.contents[1][i]))
-			return new AnyQuantifier(t, "any_quantifier")
-		} else if (obj.tag == "Leaf") {
-			return new BoolVar(obj.contents, false, null, null)
-		}
-	}
-
 	onMount(() => {
 		// Future : Use url_params to find where to fetch request from
 		// const url_params = new URLSearchParams(window.location.search);
 		// console.log(url_params)
 
-		fetch("http://localhost:8080/json")
-		.then(data => data.json())
-		.then(json => {
-			for (const [key, value] of Object.entries(json)) {
-				m.set(key, parse(value))
-			}
-			// Update store
-			store_data.set(m)
+		// fetch("http://localhost:8080/json")
+		// .then(data => data.json())
+		// .then(json => {
+		// 	for (const [key, value] of Object.entries(json)) {
+		// 		m.set(key, parse(value))
+		// 	}
+		// 	// Update store
+		// 	store_data.set(m)
 
-			render_diagram()
-			mounted = true;
-		})
+		// 	render_diagram()
+		// 	mounted = true;
+		// })
+
+
+		render_diagram()
+		mounted = true;
 
 	})
 </script>
