@@ -62,13 +62,16 @@
 <div class="main">
 	<!-- Each entry -->
 	<div class="entry">
-		<!-- The question -->
+		<!-- The category (The left-side of the problem)-->
 		{#each [...m] as [k, v]}
-		<div class="question">
+		<div class="category">
 			<button type="button" class="btn btn-primary">{k}</button>
 		</div>
 
-		<Nest data={v}/>
+		<div class="question">
+			<Nest data={v}/>
+		</div>
+
 		{/each}
 	</div>
 </div>
@@ -84,5 +87,10 @@
 
 	.entry {
 		display: flex;
+	}
+
+	.question {
+		display: flex;
+		flex-direction: column;
 	}
 </style>
