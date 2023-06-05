@@ -1,8 +1,8 @@
-<script>
-	import { BoolVar, AllQuantifier, AnyQuantifier, LadderDiagram } from 'ladder-diagram'
-	import Nest from "./Nest.svelte";
-	import { store_data } from "./stores.js";
+<script lang=ts>
+	import { LadderDiagram } from 'ladder-diagram';
+	import { store_data } from './stores';
 	import { onMount } from "svelte";
+	import Nest from "./Nest.svelte";
 
 	let mounted = false;
 
@@ -16,7 +16,7 @@
 
 		if (mounted) {
 			// Detach 
-			window.diagram.detach()
+			(window as any).diagram.detach()
 			// Render
 			render_diagram()
 		}
@@ -25,7 +25,7 @@
 	function render_diagram() {
 		if (m.size > 0) {
 			for (const [k, v] of m) {
-				window.diagram = new LadderDiagram(
+				(window as any).diagram = new LadderDiagram(
 					document.getElementById("diagram"),
 					v,
 					"Corners"

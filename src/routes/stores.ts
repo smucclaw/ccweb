@@ -1,5 +1,5 @@
 // @ts-ignore
-import { BoolVar, AllQuantifier, AnyQuantifier, LadderDiagram } from "../../node_modules/ladder-diagram/js/ladder.js"
+import { BoolVar, AllQuantifier, AnyQuantifier, LadderDiagram } from "ladder-diagram"
 import { writable } from 'svelte/store';
 
 let test_data = `

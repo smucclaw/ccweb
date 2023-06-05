@@ -1,13 +1,16 @@
-<script>
-  import { BoolVar, AllQuantifier, AnyQuantifier, LadderDiagram } from "ladder-diagram"
-
-    export let data;
-
+<script lang=ts>
+    import { BoolVar, AllQuantifier, AnyQuantifier } from "ladder-diagram"
     import { store_data } from "./stores"
 
-    function leaf_click(leaf_text, b) {
+    // TODO : When ladder-diagram gets ported to typescript
+    // this should all be type annotated
+    // Data passed down as a prop
+    export let data: any;
+
+    function leaf_click(leaf_text: string, b: boolean) {
         // Update store with correct leaf value, based on user input
-        let parse_update = (node, text, b) => {
+        // TODO : The any here refers to any of { BoolVar, AllQuantifier, AnyQuantifier }
+        let parse_update = (node: any, text: string, b: boolean): any => {
             if (node.header == "all_quantifier") {
                 let t = []
                 for (let i = 0; i < node.children.length; i++)
@@ -83,10 +86,5 @@
     .bool_container {
         display :flex;
         padding: 0.5em;
-    }
-
-    .bool_container_button {
-        margin-left: 0.5em;
-        margin-right: 0.5em;
     }
 </style>
