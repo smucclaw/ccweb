@@ -7,10 +7,10 @@
     // Data passed down as a prop
     export let data: any;
 
-    function leaf_click(leaf_text: string, b: boolean) {
+    function leaf_click(leaf_text: string, b: any) {
         // Update store with correct leaf value, based on user input
         // TODO : The any here refers to any of { BoolVar, AllQuantifier, AnyQuantifier }
-        let parse_update = (node: any, text: string, b: boolean): any => {
+        let parse_update = (node: any, text: string, b: any): any => {
             if (node.header == "all_quantifier") {
                 let t = []
                 for (let i = 0; i < node.children.length; i++)
@@ -43,7 +43,8 @@
 
 {#if data.header === "all_quantifier"}
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
-        {data.header}
+        <!-- {data.header} -->
+        <span>For all of...</span>
     </button>
 
     <!-- collapse content -->
@@ -56,7 +57,8 @@
     </div>
 {:else if data.header === "any_quantifier"}
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
-        {data.header}
+        <!-- {data.header} -->
+        <span>For any of...</span>
     </button>
 
     <!-- collapse content -->
@@ -72,13 +74,22 @@
         <p>{data.text}</p>
 
         <input type="radio" class="btn-check" name="btnradio" id="btnradio1+{data.text}" autocomplete="off" checked>
-        <label class="btn btn-outline-success" on:click={() => leaf_click(data.text, true)} for="btnradio1+{data.text}">Yes</label>
+        <label class="btn btn-outline-success" 
+            on:click={() => leaf_click(data.text, true)} 
+            on:keydown={() => leaf_click(data.text, true)}
+             for="btnradio1+{data.text}">Yes</label>
     
         <input type="radio" class="btn-check" name="btnradio" id="btnradio2+{data.text}" autocomplete="off">
-        <label class="btn btn-outline-danger" on:click={() => leaf_click(data.text, false)} for="btnradio2+{data.text}">No</label>
+        <label class="btn btn-outline-danger" 
+            on:click={() => leaf_click(data.text, false)}
+            on:keydown={() => leaf_click(data.text, false)}
+             for="btnradio2+{data.text}">No</label>
     
         <input type="radio" class="btn-check" name="btnradio" id="btnradio3+{data.text}" autocomplete="off">
-        <label class="btn btn-outline-secondary" on:click={() => leaf_click(data.text, null)} for="btnradio3+{data.text}">Don't Know</label>
+        <label class="btn btn-outline-secondary" 
+            on:click={() => leaf_click(data.text, null)}
+            on:keydown={() => leaf_click(data.text, null)}
+             for="btnradio3+{data.text}">Don't Know</label>
     </div>
 {/if}
 
