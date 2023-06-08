@@ -583,13 +583,13 @@ function parse(obj) {
 
 let json = JSON.parse(test_data3);
 
-let m = {}
+let corpus= {}
 for (const [key, value] of Object.entries(json)) {
-    m[key] = parse(value);
+    corpus[key] = parse(value);
 }
 
 // This refers to the data parsed from the json
-export const store_corpus = writable(m);
+export const store_corpus = writable(corpus);
 
 // This refers to the active "category" in use
 // The left clickable "headers" of the page
