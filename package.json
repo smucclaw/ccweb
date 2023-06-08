@@ -21,6 +21,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"ladder-diagram": "^1.1.1"
+		"ladder-diagram": "^2.0.0"
 	}
 }

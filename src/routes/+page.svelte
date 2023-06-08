@@ -1,47 +1,43 @@
 <script lang=ts>
 	import { LadderDiagram } from 'ladder-diagram';
-	import { corpse, active_question } from './stores';
+	import { store_corpus, store_active_category, store_active_constraints } from './stores';
 	import { onMount } from "svelte";
 	import Nest from "./Nest.svelte";
 
 	let mounted = false;
 
 	// String : Circuit (Bool | Any | All)
-	let m = {};
-	let a = {};
+	let corpus = {};
+	let active_category = "";
+	let active_constraints = {};
 
 	// Get the data from the store
-	// When the store gets updated form the onclick function in Nest,
-	// let it render through
-	corpse.subscribe(d => {
-		m = d;
-		active_question.set(Object.values(m)[0]);
-		console.log(m)
+	store_corpus.subscribe(d => {
+		corpus = d;
+		active_constraints = corpus[active_category];
 
+		// Detach and render the diagram again
 		if (mounted) {
-			// Detach the diagram
 			(window as any).diagram.detach()
-			// Render
 			render_diagram()
 		}
 	})
 
 	// Keep active_question in sync with the store
-	active_question.subscribe(d => {
-		a = d;
-	})
+	store_active_category.subscribe(d => { active_category = d; })
+	store_active_constraints.subscribe(d => { active_constraints = d; })
 
 	function render_diagram() {
-		if (Object.keys(m).length > 0) {
-			(window as any).diagram = new LadderDiagram(
-				document.getElementById("diagram"),
-				a,
-				"Corners")
+		if (Object.keys(corpus).length > 0) {
+			// (window as any).diagram.detach()
+			(window as any).diagram = 
+				new LadderDiagram(active_constraints, "Corners").attach(document.getElementById("diagram"))
 		}
 	}
 
 	function update_active_question(question: string) {
-		a = m[question];
+		store_active_category.set(question);
+		store_active_constraints.set(corpus[question]);
 		(window as any).diagram.detach()
 		render_diagram()
 	}
@@ -64,6 +60,10 @@
 		// 	mounted = true;
 		// })
 
+		// Set default on mount
+		store_active_category.set(Object.keys(corpus)[0]);
+		store_active_constraints.set(Object.values(corpus)[0]);
+
 		render_diagram()
 		mounted = true;
 	})
@@ -73,7 +73,7 @@
 	<div class="entries">
 		<!-- The category (The left-side of the problem)-->
 		<!-- {#each [...m] as [k, v]} -->
-		{#each Object.entries(m) as [k, v]}
+		{#each Object.entries(corpus) as [k, v]}
 			<!-- {@debug v} -->
 			{#if v.type != "BoolVar"}
 				<div class="category">
@@ -88,7 +88,7 @@
 
 	<!-- This should show active question -->
 	<div class="question">
-		<Nest data={a}/>
+		<Nest data={active_constraints}/>
 	</div>
 </div>
 

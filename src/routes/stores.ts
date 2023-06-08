@@ -588,5 +588,13 @@ for (const [key, value] of Object.entries(json)) {
     m[key] = parse(value);
 }
 
-export const corpse = writable(m);
-export const active_question = writable(m);
+// This refers to the data parsed from the json
+export const store_corpus = writable(m);
+
+// This refers to the active "category" in use
+// The left clickable "headers" of the page
+export const store_active_category = writable("");
+
+// This refers to the active "constraints" that the user fills up
+// to "satisfy" the category/rule
+export const store_active_constraints = writable({});
