@@ -1,6 +1,6 @@
 <script lang=ts>
     import { BoolVar, AllQuantifier, AnyQuantifier } from "ladder-diagram"
-    import { store_data } from "./stores"
+    import { corpse } from "./stores"
 
     // TODO : When ladder-diagram gets ported to typescript
     // this should all be type annotated
@@ -29,8 +29,8 @@
             } 
         }
 
-        store_data.update(d => {
-            // console.log("store_data_update", d)
+        corpse.update(d => {
+            // console.log("corpse", d)
             let tt = new Map()
             for (const [key, value] of d) {
                 let n = parse_update(value, leaf_text, b)

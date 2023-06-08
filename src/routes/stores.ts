@@ -1,5 +1,5 @@
 // @ts-ignore
-import { BoolVar, AllQuantifier, AnyQuantifier, LadderDiagram } from "ladder-diagram"
+import { BoolVar, AllQuantifier, AnyQuantifier } from "ladder-diagram"
 import { writable } from 'svelte/store';
 
 let test_data = `
@@ -581,12 +581,12 @@ function parse(obj) {
     }
 }
 
-let json = JSON.parse(test_data2);
-let m = new Map()
+let json = JSON.parse(test_data3);
 
+let m = new Map()
 for (const [key, value] of Object.entries(json)) {
     console.log(key, value)
 	  m.set(key, parse(value))
 }
 
-export const store_data = writable(m);
+export const corpse = writable(m);

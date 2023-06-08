@@ -1,6 +1,6 @@
 <script lang=ts>
 	import { LadderDiagram } from 'ladder-diagram';
-	import { store_data } from './stores';
+	import { corpse } from './stores';
 	import { onMount } from "svelte";
 	import Nest from "./Nest.svelte";
 
@@ -8,14 +8,15 @@
 
 	// String : Circuit (Bool | Any | All)
 	let m = new Map();
+
 	// Get the data from the store
 	// When the store gets updated form the onclick function in Nest,
 	// let it render through
-	store_data.subscribe(d => {
+	corpse.subscribe(d => {
 		m = d;
 
 		if (mounted) {
-			// Detach 
+			// Detach the diagram
 			(window as any).diagram.detach()
 			// Render
 			render_diagram()
@@ -28,8 +29,7 @@
 				(window as any).diagram = new LadderDiagram(
 					document.getElementById("diagram"),
 					v,
-					"Corners"
-				)
+					"Corners")
 			}
 		}
 	}
@@ -52,27 +52,25 @@
 		// 	mounted = true;
 		// })
 
-
 		render_diagram()
 		mounted = true;
-
 	})
 </script>
 
 <div class="main">
-	<!-- Each entry -->
-	<div class="entry">
+	<div class="entries">
 		<!-- The category (The left-side of the problem)-->
 		{#each [...m] as [k, v]}
 		<div class="category">
 			<button type="button" class="btn btn-primary">{k}</button>
 		</div>
-
-		<div class="question">
-			<Nest data={v}/>
-		</div>
-
 		{/each}
+	</div>
+
+	<!-- This should show active question -->
+	<div class="question">
+		<span> Nested Data </span>
+		<!-- <Nest data={m[a]}/> -->
 	</div>
 </div>
 
@@ -83,14 +81,14 @@
 
 	.main {
 		padding: 10px;
+		display:flex;
 	}
 
-	.entry {
-		display: flex;
+	.entries {
+		flex-direction: column;
 	}
 
 	.question {
-		display: flex;
 		flex-direction: column;
 	}
 </style>
