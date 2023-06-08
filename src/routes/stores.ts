@@ -583,10 +583,9 @@ function parse(obj) {
 
 let json = JSON.parse(test_data3);
 
-let m = new Map()
+let m = {}
 for (const [key, value] of Object.entries(json)) {
-    console.log(key, value)
-	  m.set(key, parse(value))
+    m[key] = parse(value);
 }
 
 export const corpse = writable(m);

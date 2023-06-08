@@ -30,11 +30,10 @@
         }
 
         corpse.update(d => {
-            // console.log("corpse", d)
-            let tt = new Map()
-            for (const [key, value] of d) {
+            let tt = {}
+            for (const [key, value] of Object.entries(d)) {
                 let n = parse_update(value, leaf_text, b)
-                tt.set(key, n)
+                tt[key] = n
             }
             return tt;
         })

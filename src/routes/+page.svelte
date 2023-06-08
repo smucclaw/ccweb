@@ -7,13 +7,15 @@
 	let mounted = false;
 
 	// String : Circuit (Bool | Any | All)
-	let m = new Map();
+	let m = {};
+	let active_question = {};
 
 	// Get the data from the store
 	// When the store gets updated form the onclick function in Nest,
 	// let it render through
 	corpse.subscribe(d => {
 		m = d;
+		active_question = m.Assessment
 
 		if (mounted) {
 			// Detach the diagram
@@ -24,13 +26,20 @@
 	})
 
 	function render_diagram() {
-		if (m.size > 0) {
-			for (const [k, v] of m) {
-				(window as any).diagram = new LadderDiagram(
-					document.getElementById("diagram"),
-					v,
-					"Corners")
-			}
+		// if (Object.keys(m).length > 0) {
+		// 	for (const [k, v] of Object.entries(m)) {
+		// 		(window as any).diagram = new LadderDiagram(
+		// 			document.getElementById("diagram"),
+		// 			v,
+		// 			"Corners")
+		// 	}
+		// }
+
+		if (Object.keys(m).length > 0) {
+			(window as any).diagram = new LadderDiagram(
+				document.getElementById("diagram"),
+				active_question,
+				"Corners")
 		}
 	}
 
@@ -60,17 +69,18 @@
 <div class="main">
 	<div class="entries">
 		<!-- The category (The left-side of the problem)-->
-		{#each [...m] as [k, v]}
-		<div class="category">
-			<button type="button" class="btn btn-primary">{k}</button>
-		</div>
+		<!-- {#each [...m] as [k, v]} -->
+		{#each Object.entries(m) as [k, v]}
+			<div class="category">
+				<button type="button" class="btn btn-primary">{k}</button>
+			</div>
 		{/each}
 	</div>
 
 	<!-- This should show active question -->
 	<div class="question">
-		<span> Nested Data </span>
-		<!-- <Nest data={m[a]}/> -->
+		<!-- <span> Nested Data </span> -->
+		<Nest data={active_question}/>
 	</div>
 </div>
 
