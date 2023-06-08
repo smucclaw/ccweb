@@ -589,3 +589,4 @@ for (const [key, value] of Object.entries(json)) {
 }
 
 export const corpse = writable(m);
+export const active_question = writable(m);

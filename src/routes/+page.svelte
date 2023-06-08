@@ -1,6 +1,6 @@
 <script lang=ts>
 	import { LadderDiagram } from 'ladder-diagram';
-	import { corpse } from './stores';
+	import { corpse, active_question } from './stores';
 	import { onMount } from "svelte";
 	import Nest from "./Nest.svelte";
 
@@ -8,14 +8,15 @@
 
 	// String : Circuit (Bool | Any | All)
 	let m = {};
-	let active_question = {};
+	let a = {};
 
 	// Get the data from the store
 	// When the store gets updated form the onclick function in Nest,
 	// let it render through
 	corpse.subscribe(d => {
 		m = d;
-		active_question = m.Assessment
+		active_question.set(Object.values(m)[0]);
+		console.log(m)
 
 		if (mounted) {
 			// Detach the diagram
@@ -25,22 +26,24 @@
 		}
 	})
 
-	function render_diagram() {
-		// if (Object.keys(m).length > 0) {
-		// 	for (const [k, v] of Object.entries(m)) {
-		// 		(window as any).diagram = new LadderDiagram(
-		// 			document.getElementById("diagram"),
-		// 			v,
-		// 			"Corners")
-		// 	}
-		// }
+	// Keep active_question in sync with the store
+	active_question.subscribe(d => {
+		a = d;
+	})
 
+	function render_diagram() {
 		if (Object.keys(m).length > 0) {
 			(window as any).diagram = new LadderDiagram(
 				document.getElementById("diagram"),
-				active_question,
+				a,
 				"Corners")
 		}
+	}
+
+	function update_active_question(question: string) {
+		a = m[question];
+		(window as any).diagram.detach()
+		render_diagram()
 	}
 
 	onMount(() => {
@@ -71,16 +74,18 @@
 		<!-- The category (The left-side of the problem)-->
 		<!-- {#each [...m] as [k, v]} -->
 		{#each Object.entries(m) as [k, v]}
-			<div class="category">
-				<button type="button" class="btn btn-primary">{k}</button>
-			</div>
+			<!-- {@debug v} -->
+			{#if v.type != "BoolVar"}
+				<div class="category">
+					<button type="button" on:click={() => update_active_question(k)} class="btn btn-primary">{k}</button>
+				</div>
+			{/if}
 		{/each}
 	</div>
 
 	<!-- This should show active question -->
 	<div class="question">
-		<!-- <span> Nested Data </span> -->
-		<Nest data={active_question}/>
+		<Nest data={a}/>
 	</div>
 </div>
 
