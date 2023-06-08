@@ -42,13 +42,15 @@
 </script>
 
 {#if data.header === "all_quantifier"}
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+    <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"> -->
+    <button class="btn btn-primary" type="button" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
         <!-- {data.header} -->
         <span>For all of...</span>
     </button>
 
     <!-- collapse content -->
-    <div class="collapse.show" id="collapseExample">
+    <!-- <div class="collapse.show" id="collapseExample"> -->
+    <div id="collapseExample">
         <div class="card card-body">
         {#each data.children as v}
             <svelte:self data={v} />
@@ -56,13 +58,14 @@
         </div>
     </div>
 {:else if data.header === "any_quantifier"}
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+    <button class="btn btn-primary" type="button" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
         <!-- {data.header} -->
         <span>For any of...</span>
     </button>
 
     <!-- collapse content -->
-    <div class="collapse.show" id="collapseExample">
+    <!-- <div class="collapse.show" id="collapseExample"> -->
+    <div id="collapseExample">
         <div class="card card-body">
         {#each data.children as v}
             <svelte:self data={v} />
