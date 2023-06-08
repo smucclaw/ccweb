@@ -77,7 +77,10 @@
 			<!-- {@debug v} -->
 			{#if v.type != "BoolVar"}
 				<div class="category">
-					<button type="button" on:click={() => update_active_question(k)} class="btn btn-primary">{k}</button>
+					<button 
+						on:click={() => update_active_question(k)}
+						type="button" 
+						class="btn btn-primary btn-category">{k}</button>
 				</div>
 			{/if}
 		{/each}
@@ -101,9 +104,15 @@
 
 	.entries {
 		flex-direction: column;
+		width: 15%;
+	}
+
+	.btn-category {
+		width: 100%;
 	}
 
 	.question {
 		flex-direction: column;
+		width: 85%;
 	}
 </style>
